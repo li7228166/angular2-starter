@@ -16,8 +16,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 /*
  * 路由配置
  * */
-app.get("/api/*", require("./proxy").proxy);
-app.post("/api/*", require("./proxy").proxy);
+/*app.get("/api/!*", require("./proxy").proxy);
+app.post("/api/!*", require("./proxy").proxy);*/
 
 /*
  * 处理开发模式和生产模式
