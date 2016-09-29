@@ -10,4 +10,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
     aaa = '123a11a';
+    imgUrl = '//www.baidu.com/img/bd_logo1.png';
 }

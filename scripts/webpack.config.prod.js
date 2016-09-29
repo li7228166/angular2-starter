@@ -25,7 +25,7 @@ module.exports = merge(webpackConfig, {
 			loaders: ['awesome-typescript-loader', 'angular2-template-loader']
 		}, {
 			test: /\.css/,
-			exclude: path.join(__dirname, '..', 'app', 'style'),
+			exclude: path.join(__dirname, '..', 'app', 'ts'),
 			loader: ExtractTextPlugin.extract("style-loader", "css-loader!postcss-loader", {
 				publicPath: '../'
 			})

@@ -17,7 +17,7 @@ module.exports = merge(webpackConfig, {
 	],
 	output: {
 		path: path.join(__dirname, '..'),
-		filename: 'dist/bundle.js',
+		filename: 'bundle.js',
 		publicPath: '/'
 	},
 	module: {
@@ -26,7 +26,7 @@ module.exports = merge(webpackConfig, {
 			loaders: ['awesome-typescript-loader', 'angular2-template-loader', '@angularclass/hmr-loader']
 		}, {
 			test: /\.css/,
-			exclude: path.join(__dirname, '..', 'app', 'style'),
+			exclude: path.join(__dirname, '..', 'app', 'ts'),
 			loader: 'style!css!postcss'
 		}, {
 			test: /\.less/,

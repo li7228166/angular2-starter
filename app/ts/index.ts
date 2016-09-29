@@ -9,6 +9,7 @@ import { removeNgStyles, createNewHosts, bootloader } from '@angularclass/hmr';
 import { AppComponent } from './views/test/index';
 import { AppComponent1 } from './views/test1/index';
 
+import '../style/fonts.less'
 import '../style/common.less'
 
 @NgModule({
@@ -40,7 +41,7 @@ class AppModule {
     }
 }
 
-if (process.env.ENV === 'build') {
+if (process.env.NODE_ENV === 'production') {
     enableProdMode();
 }
 
