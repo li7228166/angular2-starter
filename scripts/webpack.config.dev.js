@@ -9,10 +9,11 @@ var autoprefixer = require('autoprefixer');
 module.exports = merge(webpackConfig, {
 	devtool: 'source-map',
 	entry: [
-		'babel-polyfill',
+		'reflect-metadata',
+		'zone.js',
 		'webpack/hot/dev-server',
 		'webpack-hot-middleware/client',
-		path.join(__dirname, '..', 'app', 'js', 'index')
+		path.join(__dirname, '..', 'app', 'ts', 'index')
 	],
 	output: {
 		path: path.join(__dirname, '..'),
@@ -21,11 +22,16 @@ module.exports = merge(webpackConfig, {
 	},
 	module: {
 		loaders: [{
+			test: /\.ts$/,
+			loaders: ['awesome-typescript-loader', 'angular2-template-loader', '@angularclass/hmr-loader']
+		}, {
 			test: /\.css/,
-			loader: "style-loader!css-loader!postcss-loader"
+			exclude: path.join(__dirname, '..', 'app', 'style'),
+			loader: 'style!css!postcss'
 		}, {
 			test: /\.less/,
-			loader: "style-loader!css-loader!postcss-loader!less-loader"
+			exclude: path.join(__dirname, '..', 'app', 'ts'),
+			loader: 'style!css!postcss!less'
 		}]
 	},
 	postcss: function () {
@@ -36,13 +42,13 @@ module.exports = merge(webpackConfig, {
 			'process.env': {
 				NODE_ENV: JSON.stringify('development')
 			},
-			__PROXY__: process.env.PROXY || false,
+			__PROXY__: process.env.PROXY || false
 		}),
 		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NoErrorsPlugin(),
 		new HtmlWebpackPlugin({
-			title: 'react通用开发环境',
+			title: 'angular2-typescript-webpack通用开发环境',
 			filename: 'index.html',
 			template: path.join(__dirname, '..', 'app', 'index.html')
 		})

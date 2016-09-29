@@ -11,7 +11,7 @@ var packageConfig = require('../package.json');
 
 module.exports = merge(webpackConfig, {
 	entry: {
-		'app': path.join(__dirname, '..', 'app', 'js', 'index'),
+		'app': path.join(__dirname, '..', 'app', 'ts', 'index'),
 		'vendor': Object.keys(packageConfig.dependencies)
 	},
 	output: {
@@ -21,15 +21,20 @@ module.exports = merge(webpackConfig, {
 	},
 	module: {
 		loaders: [{
+			test: /\.ts$/,
+			loaders: ['awesome-typescript-loader', 'angular2-template-loader']
+		}, {
 			test: /\.css/,
+			exclude: path.join(__dirname, '..', 'app', 'style'),
 			loader: ExtractTextPlugin.extract("style-loader", "css-loader!postcss-loader", {
-                publicPath: '../'
-            })
+				publicPath: '../'
+			})
 		}, {
 			test: /\.less/,
+			exclude: path.join(__dirname, '..', 'app', 'ts'),
 			loader: ExtractTextPlugin.extract("style-loader", "css-loader!postcss-loader!less-loader", {
-                publicPath: '../'
-            })
+				publicPath: '../'
+			})
 		}]
 	},
 	postcss: function () {
@@ -56,7 +61,7 @@ module.exports = merge(webpackConfig, {
 			moveToParents: true
 		}),
 		new HtmlWebpackPlugin({
-			title: 'react通用开发环境',
+			title: 'angular2-typescript-webpack通用开发环境',
 			filename: 'index.html',
 			template: path.join(__dirname, '..', 'app', 'index.html'),
 			favicon: path.join(__dirname, '..', 'app', 'assets', 'images', 'favicon.ico')

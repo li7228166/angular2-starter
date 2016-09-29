@@ -4,6 +4,12 @@
   "description": "A webpack starter for Angular2",
   "author": "lxp",
   "scripts": {
+    "clean": "rimraf dist",
+    "start": "npm run clean && cross-env NODE_ENV=development node scripts/server.js",
+    "start:proxy": "npm run clean && cross-env NODE_ENV=development PROXY=true node scripts/server.js",
+    "build": "npm run clean && cross-env NODE_ENV=production webpack --config scripts/webpack.config.prod.js --progress",
+    "release": "npm run build && node scripts/server.js",
+    "release:proxy": "cross-env PROXY=true npm run build && node scripts/server.js",
     "postinstall": "typings install"
   },
   "license": "MIT",
@@ -17,6 +23,7 @@
     "@angular/platform-browser-dynamic": "^2.0.1",
     "@angular/router": "^3.0.1",
     "core-js": "^2.4.1",
+    "reflect-metadata": "^0.1.8",
     "rxjs": "^5.0.0-beta.12",
     "zone.js": "^0.6.25"
   },
@@ -24,6 +31,7 @@
     "@angularclass/hmr": "^1.2.1",
     "@angularclass/hmr-loader": "^3.0.2",
     "angular2-template-loader": "^0.5.0",
+    "autoprefixer": "^6.5.0",
     "awesome-typescript-loader": "^2.2.4",
     "body-parser": "^1.15.2",
     "cross-env": "^3.0.0",
@@ -37,6 +45,7 @@
     "less-loader": "^2.2.3",
     "open": "0.0.5",
     "postcss-loader": "^0.13.0",
+    "precss": "^1.4.0",
     "raw-loader": "^0.5.1",
     "rimraf": "^2.5.4",
     "style-loader": "^0.13.1",
@@ -44,6 +53,8 @@
     "typings": "^1.4.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.2",
+    "webpack-dev-middleware": "^1.8.3",
+    "webpack-hot-middleware": "^2.12.2",
     "webpack-merge": "^0.14.1"
   }
 }

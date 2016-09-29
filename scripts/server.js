@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({extended: false}));
  * 路由配置
  * */
 /*app.get("/api/!*", require("./proxy").proxy);
-app.post("/api/!*", require("./proxy").proxy);*/
+ app.post("/api/!*", require("./proxy").proxy);*/
 
 /*
  * 处理开发模式和生产模式
@@ -40,7 +40,6 @@ if (process.env.NODE_ENV === 'development') {
 } else {
 	app.use(express.static(path.join(__dirname, '..', 'dist')))
 }
-
 /*
  * 获得当前本机IP
  * */
@@ -55,7 +54,7 @@ var localIp = (function getIPAdress() {
 			}
 		}
 	}
-})()
+})();
 
 /*
  * 开启服务
@@ -63,5 +62,5 @@ var localIp = (function getIPAdress() {
 app.listen(port, function () {
 	console.log('Local http://localhost:' + port + '/\n');
 	console.log('External http://' + localIp + ':' + port + '/\n');
-	open("http://localhost:" + port);
+	//open("http://localhost:" + port);
 });
