@@ -11,7 +11,7 @@
 
 ### 项目说明：
 
-Angular2.x的typescript语法webpack编译环境，只包含项目开发常用依赖，可根据项目需要自行install，公共依赖代码会按照package.json的dependencies配置，提取到vender.[hash:8].js  <br />
+该项目是Angular2.x支持，使用Typescript编写，通过Webpack打包的发开环境，只包含项目开发常用依赖，可根据项目需要自行install，公共依赖代码会按照package.json的dependencies配置，提取到vender.[hash:8].js  <br />
 项目根目录下的config.json文件可配置本地web服务的host、远程部署服务器以及ajax跨域服务器的host、post
 
 ### 项目开始
@@ -39,8 +39,8 @@ $ npm start:proxy
 ```json
 {
   "proxy": {
-    "host": "xxx.xxx.xxx.xxx",
-    "port": "xxxx"
+    "host": "xxx.xxx.xxx.xxx",  //代理服务器IP
+    "port": "xxxx"              //代理服务器端口
   }
 }
 ```
