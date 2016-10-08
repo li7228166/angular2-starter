@@ -25,11 +25,11 @@ module.exports = {
             }
         }, {
             test: /\.css/,
-            exclude: path.join(__dirname, '..', 'app', 'style'),
+            include: path.join(__dirname, '..', 'app', 'ts'),
             loader: "to-string!css!postcss"
         }, {
             test: /\.less/,
-            exclude: path.join(__dirname, '..', 'app', 'style'),
+            include: path.join(__dirname, '..', 'app', 'ts'),
             loader: "to-string!css!postcss!less"
         }]
     }
