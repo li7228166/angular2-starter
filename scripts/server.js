@@ -40,27 +40,12 @@ if (process.env.NODE_ENV === 'development') {
 } else {
 	app.use(express.static(path.join(__dirname, '..', 'dist')))
 }
-/*
- * 获得当前本机IP
- * */
-var localIp = (function getIPAdress() {
-	var interfaces = require('os').networkInterfaces();
-	for (var devName in interfaces) {
-		var iface = interfaces[devName];
-		for (var i = 0; i < iface.length; i++) {
-			var alias = iface[i];
-			if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
-				return alias.address;
-			}
-		}
-	}
-})();
 
 /*
  * 开启服务
  * */
 app.listen(port, function () {
 	console.log('Local http://localhost:' + port);
-	console.log('External http://' + localIp + ':' + port);
+	console.log('External http://' + require('./util').localIp + ':' + port);
 	open("http://localhost:" + port);
 });
