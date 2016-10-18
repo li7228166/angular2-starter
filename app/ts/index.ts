@@ -1,6 +1,9 @@
 /**
  * Created by Administrator on 2016/9/29.
  */
+import 'zone.js/dist/zone';
+import 'zone.js/dist/long-stack-trace-zone';
+import 'reflect-metadata'
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { enableProdMode,ApplicationRef } from '@angular/core';
 import { NgModule } from '@angular/core';
