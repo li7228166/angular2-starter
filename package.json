@@ -12,7 +12,7 @@
     "release": "npm run build && node scripts/server.js",
     "release:proxy": "cross-env PROXY=true npm run build && node scripts/server.js",
     "deploy": "npm run build && gulp upload",
-    "dll": "webpack --config scripts/webpack.config.prod.js --progress",
+    "dll": "webpack --config scripts/webpack.config.dll.js --progress",
     "postinstall": "typings install && npm run dll"
   },
   "license": "MIT",
