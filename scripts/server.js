@@ -23,7 +23,7 @@ app.post("/api/!*", require("./proxy").proxy);
  * 处理开发模式和生产模式
  * */
 if (process.env.NODE_ENV === 'development') {
-	port = 4100;
+	port = 5100;
 	var webpackDevMiddleware = require('webpack-dev-middleware'),
 		webpackHotMiddleware = require('webpack-hot-middleware'),
 		webpackDevConfig = require('./webpack.config.dev.js');
