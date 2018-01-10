@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2016/9/29.
  */
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
     selector: 'my-app',
@@ -9,6 +9,6 @@ import { Component } from '@angular/core';
     styleUrls: ['./style.less']
 })
 export class AppComponent {
-    aaa = '123a11a';
+    aaa = '123a11a2asd123';
     imgUrl = '//www.baidu.com/img/bd_logo1.png';
 }

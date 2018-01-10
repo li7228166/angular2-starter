@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2016/9/29.
  */
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
     selector: 'my-app1',

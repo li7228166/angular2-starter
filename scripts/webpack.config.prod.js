@@ -1,15 +1,10 @@
-var path = require('path');
-var webpack = require('webpack');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var merge = require('webpack-merge');
-var precss = require('precss');
-var autoprefixer = require('autoprefixer');
-var AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
-var webpackConfig = require('./webpack.config.js');
-
-var appExtractor = new ExtractTextPlugin('style/app.[hash:8].css');
-var vendorExtractor = new ExtractTextPlugin('style/vendor.[hash:8].css');
+let path = require('path');
+let webpack = require('webpack');
+let ExtractTextPlugin = require("extract-text-webpack-plugin");
+let HtmlWebpackPlugin = require('html-webpack-plugin');
+let merge = require('webpack-merge');
+let AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+let webpackConfig = require('./webpack.config.js');
 
 //webpack 配置
 module.exports = merge(webpackConfig, {
@@ -24,61 +19,72 @@ module.exports = merge(webpackConfig, {
         publicPath: './'
     },
     module: {
-        loaders: [{
+        rules: [{
             test: /\.ts$/,
-            loaders: ['awesome-typescript', 'angular2-template']
+            use: ['awesome-typescript-loader', 'angular2-template-loader']
         }, {
             test: /\.css/,
             include: path.join(__dirname, '..', 'app', 'style'),
-            loader: appExtractor.extract("style", "css!postcss", {
-                publicPath: '../'
+            use: ExtractTextPlugin.extract({
+                fallback: "style-loader",
+                use: ["css-loader",
+                    {
+                        loader: "postcss-loader",
+                        options: {
+                            config: {
+                                path: path.join(__dirname, 'dist', 'postcss.config.js')
+                            }
+                        }
+                    }],
+                publicPath: "../"
             })
         }, {
             test: /\.less/,
             include: path.join(__dirname, '..', 'app', 'style'),
-            loader: appExtractor.extract("style", "css!postcss!less", {
-                publicPath: '../'
-            })
-        }, {
-            test: /\.css/,
-            exclude: path.join(__dirname, '..', 'app'),
-            loader: vendorExtractor.extract("style", "css!postcss", {
-                publicPath: '../'
-            })
-        }, {
-            test: /\.less/,
-            exclude: path.join(__dirname, '..', 'app'),
-            loader: vendorExtractor.extract("style", "css!postcss!less", {
-                publicPath: '../'
+            use: ExtractTextPlugin.extract({
+                fallback: "style-loader",
+                use: [
+                    "css-loader",
+                    {
+                        loader: "postcss-loader",
+                        options: {
+                            config: {
+                                path: path.join(__dirname, 'dist', 'postcss.config.js')
+                            }
+                        }
+                    },
+                    "less-loader"
+                ],
+                publicPath: "../"
             })
         }]
-    },
-    postcss: function () {
-        return [precss, autoprefixer];
     },
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: JSON.stringify('production')
-            },
-            __PROXY__: process.env.PROXY || false
+                NODE_ENV: JSON.stringify('production'),
+                __PROXY__: process.env.PROXY || false
+            }
+        }),
+        new webpack.DllReferencePlugin({
+            context: path.join(__dirname),
+            manifest: require(path.join(__dirname, '..', 'dll', 'manifest.json'))
+        }),
+        new ExtractTextPlugin({
+            filename: "style/app.[hash:8].css",
+            disable: false,
+            allChunks: true
         }),
         new webpack.optimize.UglifyJsPlugin({
+            minimize: true,
+            sourceMap: false,
             compressor: {
                 warnings: false
             }
         }),
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.AggressiveMergingPlugin({
             minSizeReduce: 1.5,
             moveToParents: true
-        }),
-        appExtractor,
-        vendorExtractor,
-        new webpack.DllReferencePlugin({
-            context: path.join(__dirname),
-            manifest: require(path.join(__dirname, '..', 'dll', 'manifest.json'))
         }),
         new HtmlWebpackPlugin({
             title: 'angular2-typescript-webpack通用开发环境',
