@@ -80,17 +80,20 @@ module.exports = merge(webpackConfig, {
             manifest: require(path.join(__dirname, '..', 'dll', 'manifest.json'))
         }),
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin(),
         new HtmlWebpackPlugin({
             title: 'angular2-typescript-webpack通用开发环境',
             filename: 'index.html',
             template: path.join(__dirname, '..', 'app', 'index.html')
         }),
-        new AddAssetHtmlPlugin([
-            {
-                filepath: require.resolve(path.join(__dirname, '..', 'dll', require('./util').vendorUrl)),
-                includeSourcemap: false
-            }
-        ])
+        new AddAssetHtmlPlugin([{
+            filepath: require('./util').vendorUrl('js')
+        }, {
+            filepath: require('./util').vendorUrl('css'),
+            typeOfAsset: 'css'
+        }].filter(item => item.filepath).map(item => {
+            item.filepath = require.resolve(path.join(__dirname, '..', 'dll', item.filepath));
+            item.includeSourcemap = false;
+            return item;
+        }))
     ]
 });

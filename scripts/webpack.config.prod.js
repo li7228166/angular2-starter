@@ -92,13 +92,20 @@ module.exports = merge(webpackConfig, {
             template: path.join(__dirname, '..', 'app', 'index.html'),
             favicon: path.join(__dirname, '..', 'app', 'assets', 'images', 'favicon.ico')
         }),
-        new AddAssetHtmlPlugin([
-            {
-                filepath: require.resolve(path.join(__dirname, '..', 'dll', require('./util').vendorUrl)),
-                outputPath: '../dist/script',
-                publicPath: './script',
-                includeSourcemap: false
-            }
-        ])
+        new AddAssetHtmlPlugin([{
+            filepath: require('./util').vendorUrl('js'),
+            outputPath: '../dist/script',
+            publicPath: './script',
+            includeSourcemap: false
+        }, {
+            filepath: require('./util').vendorUrl('css'),
+            outputPath: '../dist/style',
+            publicPath: './style',
+            includeSourcemap: false,
+            typeOfAsset: 'css'
+        }].filter(item => item.filepath).map(item => {
+            item.filepath = require.resolve(path.join(__dirname, '..', 'dll', item.filepath));
+            return item;
+        }))
     ]
 });
